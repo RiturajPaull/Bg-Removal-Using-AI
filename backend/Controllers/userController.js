@@ -1,4 +1,4 @@
-import UserModel from "../Models/userModel.js";
+import UserModel from "../Models/UserModel.js";
 import { Webhook } from "svix";
 import getRawBody from "raw-body";
 import dotenv from "dotenv";
