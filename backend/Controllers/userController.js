@@ -34,19 +34,9 @@ const clerkWebhooks = async (req, resp) => {
     switch (type) {
       // Creating a new user
       case "user.created": {
-        let primaryEmail = "No Email Found";
-        if (Array.isArray(data.email_addresses)) {
-          const found = data.email_addresses.find(
-            (emailObj) => emailObj.id === data.primary_email_address_id
-          );
-          primaryEmail =
-            found?.email_address ||
-            data.email_addresses[0]?.email_address ||
-            "No Email Found";
-        }
         const userData = {
           clerkId: data.id, // the id of the clerk
-          email: primaryEmail,
+          email: data.email_addresses[0]?.destroy.email_address,
           firstName: data.first_name,
           lastName: data.last_name,
           photo: data.image_url,
