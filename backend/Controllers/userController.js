@@ -15,7 +15,7 @@ const clerkWebhooks = async (req, resp) => {
   // we need an id for the clerk so commit ur project in github and then
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
   try {
-    // console.log("Request Body:", req.body);
+    console.log("Request Body:", req.body);
     // Create a SVIX instance with clerk webhook secret
     const payloadBuffer = await getRawBody(req);
     const payload = payloadBuffer.toString();
@@ -28,10 +28,8 @@ const clerkWebhooks = async (req, resp) => {
     });
     // if we don't have any error then the webhook events are correct then we will check the type of the event
     const { data, type } = evt;
-    console.log(
-      "📬 Email Addresses Full Object:",
-      JSON.stringify(data.email_addresses, null, 2)
-    );
+    console.log("✅ Clerk Webhook Type:", type);
+    console.log("📬 Email Addresses Object:", data.email_addresses);
 
     switch (type) {
       // Creating a new user
