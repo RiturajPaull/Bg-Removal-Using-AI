@@ -30,14 +30,13 @@ const clerkWebhooks = async (req, resp) => {
     const { data, type } = evt;
     console.log("📨 Clerk Webhook Type:", type);
     console.log("👤 Clerk Webhook Data:", data);
-    const email = data.email_addresses?.[0]?.email_address|| "No Email Found",
+
     switch (type) {
       // Creating a new user
-
       case "user.created": {
         const userData = {
           clerkId: data.id, // the id of the clerk
-          email: email,
+          email: data.email_addresses?.[0]?.email_address || "No Email Found",
           firstName: data.first_name,
           lastName: data.last_name,
           photo: data.image_url,
