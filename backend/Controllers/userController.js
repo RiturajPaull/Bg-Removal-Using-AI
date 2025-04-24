@@ -81,7 +81,6 @@ import UserModel from "../Models/UserModel.js";
 import getRawBody from "raw-body";
 import { Webhook } from "svix";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 dotenv.config();
 
 export const config = {
@@ -111,10 +110,8 @@ const clerkWebhooks = async (req, res) => {
 
     const { data, type } = evt;
 
-    // Optional: Ensure MongoDB is connected
-    if (mongoose.connection.readyState === 0) {
-      await mongoose.connect(process.env.MONGO_URI);
-    }
+    console.log("✅ Clerk Webhook Data:", data);
+    console.log("✅ Clerk Webhook Event:", type);
 
     switch (type) {
       case "user.created": {
