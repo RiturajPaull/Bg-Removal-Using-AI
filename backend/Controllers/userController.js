@@ -42,7 +42,10 @@ const clerkWebhooks = async (req, resp) => {
         };
         console.log("wEEBKIT HIT", type);
         await UserModel.create(userData);
-        resp.status(200).json({});
+        resp.status(200).json({
+          message: "User Created",
+          success: true,
+        });
         break;
       }
       case "user.updated": {
@@ -55,12 +58,18 @@ const clerkWebhooks = async (req, resp) => {
         };
 
         await UserModel.findByIdAndUpdate({ clerkId: data.id }, userData);
-        resp.status(200).json({});
+        resp.status(200).json({
+          message: "User Updated",
+          success: true,
+        });
         break;
       }
       case "user.deleted": {
         await UserModel.findOneAndDelete({ clerkId: data.id });
-        resp.status(200).json({});
+        resp.status(200).json({
+          message: "User Deleted",
+          success: true,
+        });
         break;
       }
 
