@@ -2,13 +2,13 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./Configs/mongoConfig.js";
 import userRouter from "./Routes/userRoutes.js";
-
 import dotenv from "dotenv";
-app.use(express.json());
+
+const app = express();
 
 const PORT = 5000;
 dotenv.config();
-const app = express();
+app.use(express.json());
 const corsConfig = {
   origin: "*",
   credential: true,
