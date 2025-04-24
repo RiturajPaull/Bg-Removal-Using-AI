@@ -35,7 +35,6 @@ const clerkWebhooks = async (req, resp) => {
       case "user.created": {
         const userData = {
           clerkId: data.id, // the id of the clerk
-          email: data.email_addresses[0].email_address,
           firstName: data.first_name,
           lastName: data.last_name,
           photo: data.image_url,

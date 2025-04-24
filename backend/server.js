@@ -4,6 +4,8 @@ import connectDB from "./Configs/mongoConfig.js";
 import userRouter from "./Routes/userRoutes.js";
 
 import dotenv from "dotenv";
+app.use(express.json());
+
 const PORT = 5000;
 dotenv.config();
 const app = express();
