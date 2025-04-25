@@ -21,6 +21,8 @@ const clerkWebhooks = async (req, resp) => {
       "svix-timestamp": req.headers["svix-timestamp"],
       "svix-signature": req.headers["svix-signature"],
     });
+    const { data, type } = req.body;
+    console.log("Data", data);
   } catch (error) {
     console.log("Error", error);
     resp.status(400).json({ error: true, message: error.message });
