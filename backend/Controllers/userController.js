@@ -22,7 +22,7 @@ try {
   });
 } catch (error) {
   console.log("Error", error);
-  return resp.status(400).json({ error: true, message: error.message });
+  resp.status(400).json({ error: true, message: error.message });
 }
 
 // console.log("MONGO URL", process.env.MONGO_URI);
