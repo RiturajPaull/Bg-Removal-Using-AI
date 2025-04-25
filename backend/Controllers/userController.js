@@ -24,6 +24,42 @@ const clerkWebhooks = async (req, resp) => {
     const { data, type } = req.body;
     console.log("Data", data);
     console.log("Type", type);
+
+    switch (type) {
+      case "user.created": {
+        const userData = {
+          clerkId: data.id,
+          email: data.email_addresses[0].email_address,
+          firstName: data.first_name,
+          lastName: data.last_name,
+          photo: data.image_url,
+        };
+
+        await UserModel.create(userData);
+        resp.json({});
+        break;
+      }
+      case "user.updated": {
+        const userData = {
+          email: data.email_addresses[0].email_address,
+          firstName: data.first_name,
+          lastName: data.last_name,
+          photo: data.image_url,
+        };
+
+        await UserModel.findByIdAndUpdate({ clerkId: data.id }, userData);
+        resp.json({});
+        break;
+      }
+      case "user.deleted": {
+        await UserModel.findByIdAndDelete({ clerkId: data.id });
+        resp.json({});
+        break;
+      }
+
+      default:
+        break;
+    }
   } catch (error) {
     console.log("Error", error);
     resp.status(400).json({ error: true, message: error.message });
