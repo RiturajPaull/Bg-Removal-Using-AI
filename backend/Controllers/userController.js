@@ -15,6 +15,7 @@ const clerkWebhooks = async (req, resp) => {
   // we need an id for the clerk so commit ur project in github and then
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
   try {
+    console.log("Request Headers", req.headers);
     console.log("Request Body:", req.body);
     // Create a SVIX instance with clerk webhook secret
     const payloadBuffer = await getRawBody(req);
