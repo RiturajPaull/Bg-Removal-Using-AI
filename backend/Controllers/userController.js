@@ -10,20 +10,24 @@ export const config = {
   },
 };
 
-try {
-  console.log("Req Headers", req.headers);
-  console.log("Request Body", req.body);
-  const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
+const clerkWebhooks = async (req, resp) => {
+  try {
+    console.log("Req Headers", req.headers);
+    console.log("Request Body", req.body);
+    const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
 
-  await whook.verify(JSON.stringify(req.body), {
-    "svix-id": req.headers["svix-id"],
-    "svix-timestamp": req.headers["svix-timestamp"],
-    "svix-signature": req.headers["svix-signature"],
-  });
-} catch (error) {
-  console.log("Error", error);
-  resp.status(400).json({ error: true, message: error.message });
-}
+    await whook.verify(JSON.stringify(req.body), {
+      "svix-id": req.headers["svix-id"],
+      "svix-timestamp": req.headers["svix-timestamp"],
+      "svix-signature": req.headers["svix-signature"],
+    });
+  } catch (error) {
+    console.log("Error", error);
+    resp.status(400).json({ error: true, message: error.message });
+  }
+};
+
+export { clerkWebhooks };
 
 // console.log("MONGO URL", process.env.MONGO_URI);
 // const clerkWebhooks = async (req, resp) => {
