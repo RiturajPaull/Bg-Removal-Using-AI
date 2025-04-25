@@ -31,52 +31,66 @@ const clerkWebhooks = async (req, resp) => {
     console.log("✅ Clerk Webhook Type:", type);
     console.log("📬 Email Addresses Object:", data.email_addresses);
 
-    switch (type) {
-      // Creating a new user
-      case "user.created": {
-        const userData = {
-          clerkId: data.id, // the id of the clerk
+    try {
+      if (type === "user.created") {
+        await UserModel.create({
+          clerkId: data.id,
           email: data.email_addresses[0].email_address,
           firstName: data.first_name,
           lastName: data.last_name,
-          photo: data.image_url,
-        };
-        await UserModel.create(userData);
-        resp.status(200).json({
-          message: "User Created",
-          success: true,
+          imageUrl: data.image_url,
         });
-        break;
       }
-      case "user.updated": {
-        const userData = {
-          clerkId: data.id, // the id of the clerk
-          email: data.email_addresses[0].email_address,
-          firstName: data.first_name,
-          fullName: data.full_name,
-          photo: data.image_url,
-        };
-
-        await UserModel.findByIdAndUpdate({ clerkId: data.id }, userData);
-        resp.status(200).json({
-          message: "User Updated",
-          success: true,
-        });
-        break;
-      }
-      case "user.deleted": {
-        await UserModel.findOneAndDelete({ clerkId: data.id });
-        resp.status(200).json({
-          message: "User Deleted",
-          success: true,
-        });
-        break;
-      }
-
-      default:
-        resp.status(400).json({ error: error.message });
-        break;
+    } catch (error) {
+      console.log("Webhook error", error);
+      resp.status(500).json({ error: "Webhook handling error" });
     }
+    // switch (type) {
+    //   // Creating a new user
+    //   case "user.created": {
+    //     const userData = {
+    //       clerkId: data.id, // the id of the clerk
+    //       email: data.email_addresses[0].email_address,
+    //       firstName: data.first_name,
+    //       lastName: data.last_name,
+    //       photo: data.image_url,
+    //     };
+    //     await UserModel.create(userData);
+    //     resp.status(200).json({
+    //       message: "User Created",
+    //       success: true,
+    //     });
+    //     break;
+    //   }
+    //   case "user.updated": {
+    //     const userData = {
+    //       clerkId: data.id, // the id of the clerk
+    //       email: data.email_addresses[0].email_address,
+    //       firstName: data.first_name,
+    //       fullName: data.full_name,
+    //       photo: data.image_url,
+    //     };
+
+    //     await UserModel.findByIdAndUpdate({ clerkId: data.id }, userData);
+    //     resp.status(200).json({
+    //       message: "User Updated",
+    //       success: true,
+    //     });
+    //     break;
+    //   }
+    //   case "user.deleted": {
+    //     await UserModel.findOneAndDelete({ clerkId: data.id });
+    //     resp.status(200).json({
+    //       message: "User Deleted",
+    //       success: true,
+    //     });
+    //     break;
+    //   }
+
+    //   default:
+    //     resp.status(400).json({ error: error.message });
+    //     break;
+    // }
   } catch (error) {
     return resp.status(500).json({
       message: error.message || error,
