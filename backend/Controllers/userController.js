@@ -23,6 +23,7 @@ const clerkWebhooks = async (req, resp) => {
     });
     const { data, type } = req.body;
     console.log("Data", data);
+    console.log("Type", type);
   } catch (error) {
     console.log("Error", error);
     resp.status(400).json({ error: true, message: error.message });
