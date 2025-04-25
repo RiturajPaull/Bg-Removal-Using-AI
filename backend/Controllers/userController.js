@@ -40,21 +40,54 @@ const clerkWebhooks = async (req, resp) => {
         break;
       }
       case "user.updated": {
-        const userData = {
-          email: data.email_addresses[0].email_address,
-          firstName: data.first_name,
-          lastName: data.last_name,
-          photo: data.image_url,
-        };
+        console.log("Updating user with clerkId:", data.id);
 
-        await UserModel.findOneAndUpdate({ clerkId: data.id }, userData);
-        resp.json({});
+        const updatedUser = await UserModel.findOneAndUpdate(
+          { clerkId: data.id },
+          {
+            email: data.email_addresses[0].email_address,
+            firstName: data.first_name,
+            lastName: data.last_name,
+            photo: data.image_url,
+          },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log("✅ User updated:", updatedUser.email);
+        } else {
+          console.log("❌ User not found for update:", data.id);
+        }
+
         break;
+        // const userData = {
+        //   email: data.email_addresses[0].email_address,
+        //   firstName: data.first_name,
+        //   lastName: data.last_name,
+        //   photo: data.image_url,
+        // };
+
+        // await UserModel.findOneAndUpdate({ clerkId: data.id }, userData);
+        // resp.json({});
+        // break;
       }
       case "user.deleted": {
-        await UserModel.findOneAndDelete({ clerkId: data.id });
-        resp.json({});
+        console.log("Attempting to delete user with clerkId:", data.id);
+        const deletedUser = await UserModel.findOneAndDelete({
+          clerkId: data.id,
+        });
+
+        if (deletedUser) {
+          console.log("✅ User deleted from DB:", deletedUser.email);
+        } else {
+          console.log("❌ No user found with clerkId:", data.id);
+        }
+
         break;
+
+        // await UserModel.findOneAndDelete({ clerkId: data.id });
+        // resp.json({});
+        // break;
       }
 
       default:
