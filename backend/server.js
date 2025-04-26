@@ -3,23 +3,22 @@ import cors from "cors";
 import connectDB from "./Configs/mongoConfig.js";
 import userRouter from "./Routes/userRoutes.js";
 import dotenv from "dotenv";
-dotenv.config();
 
+dotenv.config();
 const app = express();
-app.use(express.json());
 const PORT = 5000;
 
-const corsConfig = {
-  origin: "*",
-  credential: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-};
 app.use(express.json());
-app.use(cors(corsConfig));
 
-app.get("/", (req, resp) => {
-  resp.send("Hello Sir ");
-});
+console.log("URL", process.env.FRONTEND_URL);
+
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
+
 app.use("/api/user", userRouter);
 
 await connectDB().then(() => {

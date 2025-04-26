@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
 import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
+import { AppContext } from "../Context/appContext";
 const Navbar = () => {
   const { openSignIn } = useClerk();
   const { isSignedIn, user } = useUser();
+  const { credit, setCredit, loadCreditsData } = useContext(AppContext);
 
   console.log(user);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      loadCreditsData();
+    }
+  }, [isSignedIn]);
   return (
     <div className="flex items-center justify-between mx-4 py-3 lg:mx-44">
       <Link to="/" className="cursor-pointer">
