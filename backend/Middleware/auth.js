@@ -2,9 +2,13 @@ import jwt from "jsonwebtoken";
 
 //middleware function to get clerkid
 
-export const authUser = async (req, resp, next) => {
+const authUser = async (req, resp, next) => {
   try {
-    console.log("Req body", req.body);
+    req.body = {
+      clerkId: "",
+    };
+
+    console.log("Request Body", req.body);
     const { token } = req.headers;
 
     if (!token) {
@@ -19,7 +23,7 @@ export const authUser = async (req, resp, next) => {
 
     if (!req.body) {
       return resp.status(400).json({
-        message: "Rewuest Body is missing",
+        message: "Request Body is missing",
       });
     }
     req.body.clerkId = token_decode.clerkId;
@@ -30,3 +34,5 @@ export const authUser = async (req, resp, next) => {
     resp.status(500).json({ message: error.message || error, error: true });
   }
 };
+
+export default authUser;

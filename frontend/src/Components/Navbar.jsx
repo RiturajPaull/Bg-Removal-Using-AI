@@ -8,20 +8,30 @@ const Navbar = () => {
   const { isSignedIn, user } = useUser();
   const { credit, setCredit, loadCreditsData } = useContext(AppContext);
 
-  console.log(user);
+  console.log("User", user);
 
   useEffect(() => {
     if (isSignedIn) {
       loadCreditsData();
     }
   }, [isSignedIn]);
+  console.log("Credits", credit);
   return (
     <div className="flex items-center justify-between mx-4 py-3 lg:mx-44">
       <Link to="/" className="cursor-pointer">
         <img src={assets.logo} className="w-32 sm:w-44" />
       </Link>
       {isSignedIn ? (
-        <div>
+        <div className="flex items-center gap-2 sm:gap-5">
+          <button className="flex items-center gap-2 bg-blue-100 px-4 sm:px-4 sm:py-2.5 py-2 rounded-full cursor-pointer hover:scale-105 transition-all duration-700">
+            <img src={assets.credit_icon} className="w-8" />
+            <p className="font-semibold text-neutral-500 text-sm">
+              Credits : {credit}
+            </p>
+          </button>
+          <p className="font-semibold text-medium text-neutral-500 max-sm:hidden">
+            Hi, {user.fullName}
+          </p>
           <UserButton />
         </div>
       ) : (

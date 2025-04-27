@@ -17,12 +17,7 @@ const AppContextProvider = (props) => {
     try {
       const token = await getToken();
       console.log("TOKEN frontend", token);
-      // const response = await axios.get(backendUrl + "/api/user/credits", {
-      //   withCredentials: true,
-      //   headers: {
-      //     token: token,
-      //   },
-      // });
+
       const response = await API({
         ...SummaryAPI.creditUser,
         withCredentials: true,
@@ -30,14 +25,12 @@ const AppContextProvider = (props) => {
           token: token,
         },
       });
-      console.log("Response", response);
-
-      if (data.success) {
-        setCredit(data.credits);
-        console.log(data.credits);
+      console.log("Data", response.data);
+      if (response.data.success) {
+        setCredit(response.data.credits);
       }
     } catch (error) {
-      console.log("Error auth :", error);
+      console.log("Error auth :", error.message);
       toast.error(error.message);
     }
   };
