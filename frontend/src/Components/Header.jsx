@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { assets } from "../assets/assets";
+import { AppContext } from "../Context/appContext";
+import { useAuth } from "@clerk/clerk-react";
 const Header = () => {
+  const { removeBg } = useContext(AppContext);
+  const { user } = useAuth();
   return (
     <div className="flex items-center justify-center max-sm:flex-col-reverse gap-y-10 px-4 mt-10 lg:px-44 sm:mt-20">
       {/* ----------Left side---------- */}
@@ -20,7 +24,13 @@ const Header = () => {
           quidem nam mollitia
         </p>
         <div>
-          <input type="file" name="" id="upload1" hidden />
+          <input
+            type="file"
+            accept="image/*"
+            id="upload1"
+            hidden
+            onChange={(e) => removeBg(e.target.files[0])}
+          />
           <label
             htmlFor="upload1"
             className="inline-flex gap-3 px-8 py-3.5 rounded-full cursor-pointer bg-gradient-to-r from-violet-600 to-fuchsia-500 m-auto hover:scale-105 transaction-all duration-700"

@@ -5,4 +5,8 @@ export const SummaryAPI = {
     url: "/api/user/credits",
     method: "GET",
   },
+  removeImageBg: {
+    url: "/api/image/remove-bg",
+    method: "POST",
+  },
 };

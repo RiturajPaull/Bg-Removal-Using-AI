@@ -27,7 +27,7 @@ const authUser = async (req, resp, next) => {
       });
     }
     req.body.clerkId = token_decode.clerkId;
-    console.log("Userclerk id ", req.body.clerkId);
+    console.log("Userclerk id ", req.body);
     next();
   } catch (error) {
     console.log("Error :", error);

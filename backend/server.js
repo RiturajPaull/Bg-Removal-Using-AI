@@ -4,6 +4,7 @@ import connectDB from "./Configs/mongoConfig.js";
 import userRouter from "./Routes/userRoutes.js";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import uploadRouter from "./Routes/uploadRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ app.use(
 );
 
 app.use("/api/user", userRouter);
+app.use("/api/image", uploadRouter);
 app.get("/", (req, resp) => {
   resp.send("Hello Server");
 });
