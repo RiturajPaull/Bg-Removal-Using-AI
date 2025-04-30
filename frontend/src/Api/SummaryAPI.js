@@ -9,4 +9,12 @@ export const SummaryAPI = {
     url: "/api/image/remove-bg",
     method: "POST",
   },
+  razorpay_payment: {
+    url: "/api/user/pay-razor",
+    method: "POST",
+  },
+  // verifyrzPay: {
+  //   url: "/api/user/verify-rzpay",
+  //   method: "POST",
+  // },
 };

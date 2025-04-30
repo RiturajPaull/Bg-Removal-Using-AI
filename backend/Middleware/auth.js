@@ -4,9 +4,10 @@ import jwt from "jsonwebtoken";
 
 const authUser = async (req, resp, next) => {
   try {
-    req.body = {
-      clerkId: "",
-    };
+    // req.body = {
+    //   clerkId: "",
+    //   planId: "",
+    // };
 
     console.log("Request Body", req.body);
     const { token } = req.headers;
