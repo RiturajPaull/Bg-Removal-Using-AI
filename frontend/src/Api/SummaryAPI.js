@@ -1,4 +1,4 @@
-export const baseURL = "http://localhost:5000";
+export const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 export const SummaryAPI = {
   creditUser: {
